@@ -26,10 +26,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     })
 
     .state('app.search', {
-      url: "/search",
+      url: "/parties/:partyId/search",
       views: {
         'menuContent' :{
-          templateUrl: "templates/search.html"
+          templateUrl: "templates/search.html",
+          controller: 'PartySearchCtrl'
         }
       }
     })

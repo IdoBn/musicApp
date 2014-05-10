@@ -24,3 +24,12 @@ angular.module('starter.controllers', [])
          });
     };
 })
+
+.controller('PartySearchCtrl', function($scope, Party, $stateParams) {
+    $scope.id = $stateParams.partyId;
+    $scope.doSearch = function(query) {
+        Party.search($scope.id, query).success(function(data) {
+            $scope.searchResults = data;
+        }); 
+    }
+})

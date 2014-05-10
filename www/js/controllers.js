@@ -3,22 +3,20 @@ angular.module('starter.controllers', [])
 .controller('AppCtrl', function($scope) {
 })
 
-.controller('PlaylistsCtrl', function($scope, Playlists) {
-    $scope.playlists2 = Playlists.all();
-
-    Playlists.getParties().success(function(data) {
+.controller('PartiesCtrl', function($scope, Party) {
+    Party.getParties().success(function(data) {
         $scope.parties = data.party;
     });
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams, Playlists) {
-    $scope.id = $stateParams.playlistId;
-    Playlists.getParty($scope.id).success(function(data) {
+.controller('PartyCtrl', function($scope, $stateParams, Party) {
+    $scope.id = $stateParams.partyId;
+    Party.getParty($scope.id).success(function(data) {
         $scope.party = data.party;
     });
 
     $scope.doRefresh = function() {
-        Playlists.getParty($scope.id).success(function(data) {
+        Party.getParty($scope.id).success(function(data) {
             $scope.party = data.party;
         })
         .finally(function() {

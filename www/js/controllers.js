@@ -25,11 +25,17 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('PartySearchCtrl', function($scope, Party, $stateParams) {
+.controller('PartySearchCtrl', function($scope, Party, $stateParams, $ionicViewService) {
     $scope.id = $stateParams.partyId;
     $scope.doSearch = function(query) {
         Party.search($scope.id, query).success(function(data) {
             $scope.searchResults = data;
         }); 
+    }
+    $scope.createRequest = function(song) {
+        Party.createRequest(song, $scope.id).success(function(data, status) {
+            var backView = $ionicViewService.getBackView();
+            backView && backView.go();
+        })
     }
 })

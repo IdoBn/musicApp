@@ -22,8 +22,23 @@ services.factory('Party', function($http) {
                         songpull: songpull
                     }
                 });
-        }
+        },
 
+        createRequest: function(song, partyId) {
+            return $http({
+                url: 'http://music-hasalon.herokuapp.com/requests',
+                method: 'POST',
+                data: {
+                    request: {
+                        title: song.title,
+                        author: song.author.name,
+                        url: song.player_url,
+                        party_id: partyId,
+                        thumbnail: song.thumbnails[0].url
+                    }
+                }
+            });
+        }
         
     }
 });

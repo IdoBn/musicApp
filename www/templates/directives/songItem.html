@@ -1,0 +1,6 @@
+<a class="item item-thumbnail-left" href="#">
+  <img ng-src="{{request.thumbnail}}">
+  <h2>{{request.title}}</h2>
+  <p>{{request.author}}</p>
+  <p ng-if='request.likes.length'>likes {{request.likes.length}}</p>
+</a>

@@ -31,11 +31,11 @@ angular.module('starter.controllers', [])
     Party.search($scope.id, query).success(function(data) {
       $scope.searchResults = data;
     }); 
-  }
+  };
   $scope.createRequest = function(song) {
-    Party.createRequest(song, $scope.id).success(function(data, status) {
-      var backView = $ionicViewService.getBackView();
-      backView && backView.go();
-    })
-  }
+    Party.createRequest(song, $scope.id).success(function(data) {
+    });
+    var backView = $ionicViewService.getBackView();
+    backView && backView.go();
+  };
 })

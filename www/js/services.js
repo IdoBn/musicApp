@@ -4,16 +4,13 @@ services.factory('Party', function($http) {
   function load(path) {
     return $http.get('http://music-hasalon.herokuapp.com/' + path + '.json');
   }
-
   return {
     getParties: function() {
       return load('party');
     },
-
     getParty: function(id) {
       return load('party/' + id);
     },
-
     search: function(id, songpull) {
       return $http({
         url: 'http://music-hasalon.herokuapp.com/party/' + id + '/search.json',
@@ -23,7 +20,6 @@ services.factory('Party', function($http) {
         }
       });
     },
-
     createRequest: function(song, partyId) {
       return $http({
         url: 'http://music-hasalon.herokuapp.com/requests',
@@ -38,7 +34,18 @@ services.factory('Party', function($http) {
           }
         }
       });
+    } 
+  }
+});
+
+services.factory('CurrentRequest', function() {
+  var request = null;
+  return {
+    get: function() {
+      return request;
+    },
+    set: function(newRequest) {
+      request = newRequest;
     }
-    
   }
 });

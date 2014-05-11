@@ -1,4 +1,4 @@
-<a class="item item-thumbnail-left" href="#">
+<a class="item item-thumbnail-left" ng-click="clicked(request)" href='#/app/parties/{{request.party_id}}/requests/{{request.id}}'>
   <img ng-src="{{request.thumbnail}}">
   <h2>{{request.title}}</h2>
   <p>{{request.author}}</p>

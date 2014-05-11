@@ -66,6 +66,16 @@ angular.module('starter', [
           controller: 'PartyCtrl'
         }
       }
+    })
+
+    .state('app.request', {
+      url: '/parties/:partyId/requests/:requestId',
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/request.html",
+          controller: 'RequestCtrl'
+        }
+      }
     });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/parties');

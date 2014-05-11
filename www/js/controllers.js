@@ -39,3 +39,7 @@ angular.module('starter.controllers', [])
     backView && backView.go();
   };
 })
+
+.controller('RequestCtrl', function($scope, CurrentRequest) {
+  $scope.request = CurrentRequest.get();
+})

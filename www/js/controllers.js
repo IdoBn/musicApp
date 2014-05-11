@@ -20,7 +20,7 @@ angular.module('starter.controllers', [])
       $scope.party = data.party;
     })
     .finally(function() {
-     $scope.$broadcast('scroll.refreshComplete');
+      $scope.$broadcast('scroll.refreshComplete');
    });
   };
 })

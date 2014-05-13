@@ -40,6 +40,10 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('RequestCtrl', function($scope, CurrentRequest) {
+.controller('RequestCtrl', function($scope, CurrentRequest, DirectVideoUrl, $sce) {
   $scope.request = CurrentRequest.get();
+  DirectVideoUrl.getDirectUrl($scope.request.url).success(function(data) {
+    console.log(data);
+    $scope.request.directUrl = $sce.trustAsResourceUrl(data.direct_url);
+  });
 })

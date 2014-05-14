@@ -1,13 +1,13 @@
 <ion-view title="{{party.name}}">
   <ion-nav-buttons side="right">
     <a href="#/app/parties/{{id}}/search" class='button'>search</a>
-    <a href="#/app/parties/{{id}}/player">player</a>
   </ion-nav-buttons>
   <ion-content class="has-header">
     <ion-refresher
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
+    <a href="#/app/parties/{{id}}/player" class='button button-block button-stable'>player</a>
     <ion-list>
       <ion-item ng-repeat="request in party.requests">
         <song-item request='request'></song-item>

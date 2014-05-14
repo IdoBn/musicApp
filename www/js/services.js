@@ -51,12 +51,11 @@ services.factory('CurrentRequest', function() {
 });
 
 services.factory('DirectVideoUrl', function($http) {
-  var url = 'http://ec2-54-84-34-52.compute-1.amazonaws.com:8989/api/info?url=';
+  var url = 'http://ec2-54-85-146-44.compute-1.amazonaws.com:8989/api/info?url=';
   return {
     getDirectUrl: function(ytUrl) {
       var newYtUrl = ytUrl.split('&feature=')[0];
       return $http.get(url+newYtUrl);
-      // return $http.get(url + newYtUrl);
     }
   }
 });

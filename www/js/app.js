@@ -8,7 +8,12 @@ angular.module('starter', [
   'ionic', 
   'starter.controllers', 
   'starter.services',
-  'starter.directives'
+  'starter.directives',
+  "com.2fdevs.videogular",
+  "com.2fdevs.videogular.plugins.controls",
+  "com.2fdevs.videogular.plugins.overlayplay",
+  "com.2fdevs.videogular.plugins.buffering",
+  "com.2fdevs.videogular.plugins.poster"
 ])
 
 .run(function($ionicPlatform) {

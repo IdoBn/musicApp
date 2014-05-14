@@ -20,13 +20,17 @@ directives.directive('hasalonPlayer', function(Party, DirectVideoUrl) {
   return {
     restrict: 'E',
     replace: true,   
-    controller: function($scope, $sce) {
-      Party.getParty($scope.partyId).success(function(data) {
-        $scope.party = data.party;
-        console.log($scope.party);
-        $scope.request = $scope.party.requests[0];
-        $scope.getNewDirectUrl();
-      });
+    controller: function($scope, $sce, $rootScope, $state) {
+      $scope.getNewParty = function() {
+        Party.getParty($scope.partyId).success(function(data) {
+          $scope.party = data.party;
+          console.log($scope.party);
+          $scope.request = $scope.party.requests[0];
+          $scope.getNewDirectUrl();
+        });
+      };
+
+      $scope.getNewParty();
 
       $scope.getNewDirectUrl = function() {
         DirectVideoUrl.getDirectUrl($scope.request.url).success(function(data) {
@@ -35,7 +39,6 @@ directives.directive('hasalonPlayer', function(Party, DirectVideoUrl) {
           $scope.setVideo();
         });
       };
-
       $scope.setVideo = function() {
         var sourceElement = angular.element(document.querySelector('videogular video'));
         sourceElement[0].src = $scope.request.directUrl;
@@ -45,6 +48,14 @@ directives.directive('hasalonPlayer', function(Party, DirectVideoUrl) {
         $scope.API = API;
         API.play();
       };
+
+      $rootScope.$on('onVgComplete', function() {
+        console.log('complete!!!');
+        Party.setPlayed($scope.request.id).success(function(data){
+          console.log('success! ' + data);
+          $scope.getNewParty();
+        });
+      });
     },
     scope: {
       partyId: '='

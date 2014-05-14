@@ -34,6 +34,15 @@ services.factory('Party', function($http) {
           }
         }
       });
+    },
+    setPlayed: function(id) {
+      return $http({
+        url: 'http://music-hasalon.herokuapp.com/request_played',
+        method: 'POST',
+        data: {
+          id: id
+        }
+      })
     } 
   }
 });

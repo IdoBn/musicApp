@@ -24,7 +24,7 @@ angular.module('starter.controllers', [])
    });
   };
 
-  $rootScope.$broadcast('unbindPlayer');
+  $rootScope.$broadcast('destroyInterval');
 })
 
 .controller('PartySearchCtrl', function($scope, Party, $stateParams, $ionicViewService) {

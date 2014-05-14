@@ -28,7 +28,7 @@ directives.directive('hasalonPlayer', function(Party, DirectVideoUrl) {
         $scope.getNewDirectUrl();
       });
 
-      $interval(function() {
+      var intervalPromise = $interval(function() {
         $scope.getNewParty();
         console.log('interval');
       }, 5000);
@@ -70,9 +70,10 @@ directives.directive('hasalonPlayer', function(Party, DirectVideoUrl) {
         });
       });
 
-      $rootScope.$on('unbindPlayer', function(){
-        console.log('destroy bind!');
-        window.setTimeout(function(){ $scope.$destroy() }, 0);//Ref 5
+      $rootScope.$on('destroyInterval', function(){
+        console.log('destroy interval');
+        $scope.$destroy();
+        $interval.cancel(intervalPromise);
       });
     },
     scope: {

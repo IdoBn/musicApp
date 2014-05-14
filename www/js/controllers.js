@@ -47,11 +47,6 @@ angular.module('starter.controllers', [])
     $scope.request.directUrl = $sce.trustAsResourceUrl(data.direct_url);
     $scope.setVideo();
   });
-
-  $scope.config = {
-    stretch: {label: "Fit", value: "fit"}
-  };
-
   $scope.setVideo = function() {
     var sourceElement = angular.element(document.querySelector('videogular video'));
     sourceElement[0].src = $scope.request.directUrl;

@@ -40,18 +40,13 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('RequestCtrl', function($scope, CurrentRequest, DirectVideoUrl, $sce) {
+.controller('RequestCtrl', function($scope, CurrentRequest, DirectVideoUrl, $sce, $ionicViewService) {
   $scope.request = CurrentRequest.get();
   DirectVideoUrl.getDirectUrl($scope.request.url).success(function(data) {
     console.log(data);
     $scope.request.directUrl = $sce.trustAsResourceUrl(data.direct_url);
     $scope.setVideo();
   });
-
-  $scope.config = {
-    stretch: {label: "Fit", value: "fit"}
-  };
-
   $scope.setVideo = function() {
     var sourceElement = angular.element(document.querySelector('videogular video'));
     sourceElement[0].src = $scope.request.directUrl;
@@ -61,4 +56,16 @@ angular.module('starter.controllers', [])
     $scope.API = API;
     API.play();
   };
+  $scope.$on('VG_EVENTS.ON_PAUSE', function() {
+    console.log('pause!');
+  });
+  $scope.$on('VG_EVENTS.ON_ENTER_FULLSCREEN', function() {
+    console.log('enter full screen!');
+  });
+  $scope.$on('VG_EVENTS.ON_PLAY', function() {
+    console.log('PLAY!');
+  });
+  $scope.$on('VG_EVENTS.ON_TOGGLE_FULLSCREEN', function() {
+    console.log('full screen toggle!');
+  });
 })

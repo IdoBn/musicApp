@@ -36,7 +36,7 @@ directives.directive('hasalonPlayer', function(Party, DirectVideoUrl) {
       $scope.getNewParty = function() {
         Party.getParty($scope.partyId).success(function(data) {
           $scope.party = data.party;
-          if ($scope.request.id != $scope.party.requests[0].id || !$scope.request) {
+          if (!$scope.request || $scope.request.id != $scope.party.requests[0].id) {
             console.log('new request: '+$scope.party);
             $scope.request = $scope.party.requests[0];
             $scope.getNewDirectUrl();

@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('RequestCtrl', function($scope, CurrentRequest, DirectVideoUrl, $sce, $ionicViewService) {
+.controller('RequestCtrl', function($scope, CurrentRequest, DirectVideoUrl, $sce) {
   $scope.request = CurrentRequest.get();
   DirectVideoUrl.getDirectUrl($scope.request.url).success(function(data) {
     console.log(data);
@@ -56,16 +56,11 @@ angular.module('starter.controllers', [])
     $scope.API = API;
     API.play();
   };
-  $scope.$on('VG_EVENTS.ON_PAUSE', function() {
-    console.log('pause!');
-  });
-  $scope.$on('VG_EVENTS.ON_ENTER_FULLSCREEN', function() {
-    console.log('enter full screen!');
-  });
-  $scope.$on('VG_EVENTS.ON_PLAY', function() {
-    console.log('PLAY!');
-  });
-  $scope.$on('VG_EVENTS.ON_TOGGLE_FULLSCREEN', function() {
-    console.log('full screen toggle!');
-  });
+  $scope.onCompleteVideo = function() {
+    console.log('done');
+  };
+})
+
+.controller('PlayerCtrl', function($scope, $stateParams) {
+  $scope.partyId = $stateParams.partyId;
 })

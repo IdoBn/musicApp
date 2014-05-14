@@ -56,4 +56,11 @@ angular.module('starter.controllers', [])
     $scope.API = API;
     API.play();
   };
+  $scope.onCompleteVideo = function() {
+    console.log('done');
+  };
+})
+
+.controller('PlayerCtrl', function($scope, $stateParams) {
+  $scope.partyId = $stateParams.partyId;
 })

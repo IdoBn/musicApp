@@ -9,7 +9,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('PartyCtrl', function($scope, $stateParams, Party) {
+.controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope) {
   $scope.id = $stateParams.partyId;
   Party.getParty($scope.id).success(function(data) {
     $scope.party = data.party;
@@ -23,6 +23,8 @@ angular.module('starter.controllers', [])
       $scope.$broadcast('scroll.refreshComplete');
    });
   };
+
+  $rootScope.$broadcast('unbindPlayer');
 })
 
 .controller('PartySearchCtrl', function($scope, Party, $stateParams, $ionicViewService) {

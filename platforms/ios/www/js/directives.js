@@ -66,9 +66,13 @@ directives.directive('hasalonPlayer', function(Party, DirectVideoUrl) {
       $rootScope.$on('onVgComplete', function() {
         console.log('complete!!!');
         Party.setPlayed($scope.request.id).success(function(data){
-          console.log('success! ' + data);
           $scope.getNewParty();
         });
+      });
+
+      $rootScope.$on('unbindPlayer', function(){
+        console.log('destroy bind!');
+        window.setTimeout(function(){ $scope.$destroy() }, 0);//Ref 5
       });
     },
     scope: {

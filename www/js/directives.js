@@ -20,17 +20,29 @@ directives.directive('hasalonPlayer', function(Party, DirectVideoUrl) {
   return {
     restrict: 'E',
     replace: true,   
-    controller: function($scope, $sce, $rootScope, $state) {
+    controller: function($scope, $sce, $rootScope, $interval) {
+      Party.getParty($scope.partyId).success(function(data) {
+        $scope.party = data.party;
+        console.log('new request: '+$scope.party);
+        $scope.request = $scope.party.requests[0];
+        $scope.getNewDirectUrl();
+      });
+
+      $interval(function() {
+        $scope.getNewParty();
+        console.log('interval');
+      }, 5000);
+
       $scope.getNewParty = function() {
         Party.getParty($scope.partyId).success(function(data) {
           $scope.party = data.party;
-          console.log($scope.party);
-          $scope.request = $scope.party.requests[0];
-          $scope.getNewDirectUrl();
+          if ($scope.request.id != $scope.party.requests[0].id || !$scope.request) {
+            console.log('new request: '+$scope.party);
+            $scope.request = $scope.party.requests[0];
+            $scope.getNewDirectUrl();
+          }
         });
       };
-
-      $scope.getNewParty();
 
       $scope.getNewDirectUrl = function() {
         DirectVideoUrl.getDirectUrl($scope.request.url).success(function(data) {
@@ -39,11 +51,13 @@ directives.directive('hasalonPlayer', function(Party, DirectVideoUrl) {
           $scope.setVideo();
         });
       };
+
       $scope.setVideo = function() {
         var sourceElement = angular.element(document.querySelector('videogular video'));
         sourceElement[0].src = $scope.request.directUrl;
         sourceElement[0].type = 'video/mp4';
       };
+
       $scope.onPlayerReady = function(API) {
         $scope.API = API;
         API.play();

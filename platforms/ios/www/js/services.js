@@ -1,19 +1,22 @@
 var services = angular.module('starter.services', []);
 
+// var URL = 'http://music-hasalon.herokuapp.com';
+var URL = 'http://localhost:3000'
+
 services.factory('Party', function($http) {
   function load(path) {
-    return $http.get('http://music-hasalon.herokuapp.com/' + path + '.json');
+    return $http.get(URL + '/' + path);
   }
   return {
     getParties: function() {
-      return load('party');
+      return load('parties');
     },
     getParty: function(id) {
-      return load('party/' + id);
+      return load('parties/' + id);
     },
     search: function(id, songpull) {
       return $http({
-        url: 'http://music-hasalon.herokuapp.com/party/' + id + '/search.json',
+        url: URL + '/parties/' + id + '/search',
         method: 'GET',
         params: {
           songpull: songpull
@@ -22,7 +25,7 @@ services.factory('Party', function($http) {
     },
     createRequest: function(song, partyId) {
       return $http({
-        url: 'http://music-hasalon.herokuapp.com/requests',
+        url: URL + '/requests',
         method: 'POST',
         data: {
           request: {
@@ -37,11 +40,8 @@ services.factory('Party', function($http) {
     },
     setPlayed: function(id) {
       return $http({
-        url: 'http://music-hasalon.herokuapp.com/request_played',
-        method: 'POST',
-        data: {
-          id: id
-        }
+        url: URL + '/requests/'+ id +'/played',
+        method: 'PATCH'
       })
     } 
   }

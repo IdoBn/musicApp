@@ -5,7 +5,8 @@ angular.module('starter.controllers', [])
 
 .controller('PartiesCtrl', function($scope, Party) {
   Party.getParties().success(function(data) {
-    $scope.parties = data.party;
+    console.log('new party: ', data);
+    $scope.parties = data;
   });
 })
 

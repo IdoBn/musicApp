@@ -1,7 +1,7 @@
 var services = angular.module('starter.services', []);
 
 // var URL = 'http://music-hasalon.herokuapp.com';
-var URL = 'http://localhost:3000'
+var URL = 'http://music-hasalon-api.herokuapp.com'
 
 services.factory('Party', function($http) {
   function load(path) {

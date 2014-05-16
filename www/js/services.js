@@ -1,7 +1,8 @@
 var services = angular.module('starter.services', []);
 
 // var URL = 'http://music-hasalon.herokuapp.com';
-var URL = 'http://music-hasalon-api.herokuapp.com'
+// var URL = 'http://music-hasalon-api.herokuapp.com'
+var URL = 'http://localhost:3000'
 
 services.factory('Party', function($http) {
   function load(path) {
@@ -68,3 +69,32 @@ services.factory('DirectVideoUrl', function($http) {
     }
   }
 });
+
+services.factory('AuthUser', function($http, $rootScope) {
+  var currentUser = null;
+  return {
+    login: function(params) {
+      return $http({
+        url: URL + '/sessions',
+        method: 'POST',
+        data: {
+          access_token: params.access_token,
+          expires_in: params.expires_in
+        }
+      });
+    },
+    logout: function() {
+      return $http({
+        url: URL + '/sessions',
+        method: 'DELETE',
+      });
+    },
+    setCurrentUser: function(user) {
+      currentUser = user;
+      $rootScope.$broadcast('CURRENT_USER_SET');
+    },
+    getCurrentUser: function() {
+      return currentUser;
+    }
+  }
+})

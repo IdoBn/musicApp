@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $state, OpenFB) {
+.controller('AppCtrl', function($scope, $state, OpenFB, AuthUser, $rootScope) {
   $scope.logout = function () {
     OpenFB.logout();
     $state.go('app.login');
@@ -15,6 +15,11 @@ angular.module('starter.controllers', [])
       alert('Revoke permissions failed');
     });
   };
+
+  $rootScope.$on('CURRENT_USER_SET', function() {
+    $scope.user = AuthUser.getCurrentUser();
+    console.log($scope.user);
+  })
 })
 
 .controller('PartiesCtrl', function($scope, Party) {

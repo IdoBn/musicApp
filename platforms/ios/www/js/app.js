@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', [
-  'ionic', 
+  'ionic',
+  'openfb',
   'starter.controllers', 
   'starter.services',
   'starter.directives',
@@ -16,12 +17,25 @@ angular.module('starter', [
   "com.2fdevs.videogular.plugins.poster"
 ])
 
-.run(function($ionicPlatform) {
+.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB) {
+  OpenFB.init('1417458451820697', 'http://localhost:8100/oauthcallback.html');
+
   $ionicPlatform.ready(function() {
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+  });
+
+  $rootScope.$on('$stateChangeStart', function(event, toState) {
+    if (toState.name !== "app.login" && toState.name !== "app.logout" && !$window.sessionStorage['fbtoken']) {
+      $state.go('app.login');
+      event.preventDefault();
+    }
+  });
+
+  $rootScope.$on('OAuthException', function() {
+    $state.go('app.login');
   });
 })
 
@@ -33,6 +47,26 @@ angular.module('starter', [
       abstract: true,
       templateUrl: "templates/menu.html",
       controller: 'AppCtrl'
+    })
+
+    .state('app.login', {
+      url: "/login",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/login.html",
+          controller: "LoginCtrl"
+        }
+      }
+    })
+
+    .state('app.logout', {
+      url: "/logout",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/logout.html",
+          controller: "LogoutCtrl"
+        }
+      }
     })
 
     .state('app.search', {

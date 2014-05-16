@@ -7,11 +7,9 @@
  * @author Christophe Coenraets @ccoenraets
  * @version 0.2
  */
-angular.module('openfb', [
-        'starter.services'
-    ])
+angular.module('openfb', [])
 
-    .factory('OpenFB', function ($rootScope, $q, $window, $http, AuthUser) {
+    .factory('OpenFB', function ($rootScope, $q, $window, $http) {
 
         var FB_LOGIN_URL = 'https://www.facebook.com/dialog/oauth',
 
@@ -126,13 +124,6 @@ angular.module('openfb', [
             if (url.indexOf("access_token=") > 0) {
                 queryString = url.substr(url.indexOf('#') + 1);
                 obj = parseQueryString(queryString);
-                // window.localStorage.setItem("access_token", obj['access_token']);
-                console.log(obj);
-                AuthUser.login(obj).success(function(data) {
-                    AuthUser.setCurrentUser(data);
-                    alert(AuthUser.getCurrentUser().name);
-                    window.currentUser = AuthUser.getCurrentUser();
-                });
                 tokenStore['fbtoken'] = obj['access_token'];
                 deferredLogin.resolve();
             } else if (url.indexOf("error=") > 0) {
@@ -149,7 +140,6 @@ angular.module('openfb', [
          */
         function logout() {
             tokenStore['fbtoken'] = undefined;
-            AuthUser.logout();
         }
 
         /**
@@ -162,7 +152,6 @@ angular.module('openfb', [
             return api({method: 'DELETE', path: '/me/permissions'})
                 .success(function () {
                     console.log('Permissions revoked');
-                    AuthUser.logout();
                 });
         }
 

@@ -1,6 +1,20 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope) {
+.controller('AppCtrl', function($scope, $state, OpenFB) {
+  $scope.logout = function () {
+    OpenFB.logout();
+    $state.go('app.login');
+  };
+
+  $scope.revokePermissions = function () {
+    OpenFB.revokePermissions().then(
+    function () {
+      $state.go('app.login');
+    },
+    function () {
+      alert('Revoke permissions failed');
+    });
+  };
 })
 
 .controller('PartiesCtrl', function($scope, Party) {
@@ -8,6 +22,18 @@ angular.module('starter.controllers', [])
     console.log('new party: ', data);
     $scope.parties = data;
   });
+})
+
+.controller('LoginCtrl', function ($scope, $location, OpenFB) {
+  $scope.facebookLogin = function () {
+    OpenFB.login('email,read_stream').then(
+      function () {
+        $location.path('/app/person/me/feed');
+      },
+      function () {
+        alert('OpenFB login failed');
+      });
+  };
 })
 
 .controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope) {

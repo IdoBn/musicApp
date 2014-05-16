@@ -64,6 +64,72 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlayerCtrl', function($scope, $stateParams) {
+.controller('PlayerCtrl', function($scope, $stateParams , $sce, $rootScope, $interval, Party, DirectVideoUrl) {
   $scope.partyId = $stateParams.partyId;
+
+  $scope.config = {
+    width: 740,
+    height: 380,
+    autoHide: false,
+    autoHideTime: 3000,
+    autoPlay: false,
+    responsive: false,
+    transclude: true,
+    theme: 'lib/bower_components/videogular-themes-default/videogular.css'
+  };
+
+  Party.getParty($scope.partyId).success(function(data) {
+    $scope.party = data.party;
+    console.log('new request: '+$scope.party);
+    $scope.request = $scope.party.requests[0];
+    $scope.getNewDirectUrl();
+  });
+
+  var intervalPromise = $interval(function() {
+    $scope.getNewParty();
+    console.log('interval');
+  }, 5000);
+
+  $scope.getNewParty = function() {
+    Party.getParty($scope.partyId).success(function(data) {
+      $scope.party = data.party;
+      if (!$scope.request || $scope.request.id != $scope.party.requests[0].id) {
+        console.log('new request: '+$scope.party);
+        $scope.request = $scope.party.requests[0];
+        $scope.getNewDirectUrl();
+      }
+    });
+  };
+
+  $scope.getNewDirectUrl = function() {
+    DirectVideoUrl.getDirectUrl($scope.request.url).success(function(data) {
+      console.log(data);
+      $scope.request.directUrl = $sce.trustAsResourceUrl(data.direct_url);
+      $scope.setVideo();
+    });
+  };
+
+  $scope.setVideo = function() {
+    var sourceElement = angular.element(document.querySelector('videogular video'));
+    sourceElement[0].src = $scope.request.directUrl;
+    sourceElement[0].type = 'video/mp4';
+  };
+
+  $scope.onPlayerReady = function(API) {
+    $scope.API = API;
+    API.play();
+  };
+
+  $rootScope.$on('onVgComplete', function() {
+    console.log('complete!!!');
+    Party.setPlayed($scope.request.id).success(function(data){
+      $scope.getNewParty();
+    });
+  });
+
+  $rootScope.$on('destroyInterval', function(){
+    console.log('destroy interval');
+    $scope.$destroy();
+    $interval.cancel(intervalPromise);
+  });
 })

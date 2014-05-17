@@ -4,7 +4,7 @@ var services = angular.module('starter.services', []);
 // var URL = 'http://music-hasalon-api.herokuapp.com'
 var URL = 'http://localhost:3000'
 
-services.factory('Party', function($http) {
+services.factory('Party', function($http, AuthUser) {
   function load(path) {
     return $http.get(URL + '/' + path);
   }
@@ -35,16 +35,32 @@ services.factory('Party', function($http) {
             url: song.player_url,
             party_id: partyId,
             thumbnail: song.thumbnails[0].url
-          }
+          },
+          user_access_token: AuthUser.getCurrentUser().access_token
         }
       });
     },
     setPlayed: function(id) {
       return $http({
         url: URL + '/requests/'+ id +'/played',
-        method: 'PATCH'
-      })
-    } 
+        method: 'PATCH',
+        data: {
+          user_access_token: AuthUser.getCurrentUser().access_token
+        }
+      });
+    }, 
+    createParty: function(party) {
+      return $http({
+        url: URL + '/parties',
+        method: 'POST',
+        data: {
+          party: {
+            name: party.name
+          },
+          user_access_token: AuthUser.getCurrentUser().access_token
+        }
+      });
+    }
   }
 });
 

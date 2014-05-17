@@ -19,7 +19,7 @@ angular.module('starter.controllers', [])
   $rootScope.$on('CURRENT_USER_SET', function() {
     $scope.user = AuthUser.getCurrentUser();
     console.log($scope.user);
-  })
+  });
 })
 
 .controller('PartiesCtrl', function($scope, Party) {
@@ -41,8 +41,9 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope) {
+.controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope, AuthUser) {
   $scope.id = $stateParams.partyId;
+  $scope.currentUser = AuthUser.getCurrentUser();
   Party.getParty($scope.id).success(function(data) {
     $scope.party = data.party;
   });
@@ -57,6 +58,14 @@ angular.module('starter.controllers', [])
   };
 
   $rootScope.$broadcast('destroyInterval');
+})
+
+.controller('NewParty', function($scope, Party, $state) {
+  $scope.createParty = function(party) {
+    Party.createParty(party).success(function(data) {
+      $state.go('app.parties');
+    });
+  };
 })
 
 .controller('PartySearchCtrl', function($scope, Party, $stateParams, $ionicViewService) {

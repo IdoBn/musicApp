@@ -79,14 +79,16 @@ angular.module('starter', [
       }
     })
 
-    .state('app.browse', {
-      url: "/browse",
+    .state('app.newParty', {
+      url: "/parties/new",
       views: {
         'menuContent' :{
-          templateUrl: "templates/browse.html"
+          templateUrl: "templates/newParty.html",
+          controller: 'NewParty'
         }
       }
     })
+
     .state('app.parties', {
       url: "/parties",
       views: {

@@ -130,8 +130,6 @@ angular.module('openfb', [
                 console.log(obj);
                 AuthUser.login(obj).success(function(data) {
                     AuthUser.setCurrentUser(data);
-                    alert(AuthUser.getCurrentUser().name);
-                    window.currentUser = AuthUser.getCurrentUser();
                 });
                 tokenStore['fbtoken'] = obj['access_token'];
                 deferredLogin.resolve();

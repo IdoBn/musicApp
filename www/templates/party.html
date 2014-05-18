@@ -7,7 +7,7 @@
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
-    <a ng-if="currentUser.id == party.user.id" href="#/app/parties/{{id}}/player" class='button button-block button-stable'>player</a>
+    <a ng-show="currentUser.id == party.user.id" href="#/app/parties/{{id}}/player" class='button button-block button-stable'>player</a>
     <ion-list>
       <ion-item ng-repeat="request in party.requests">
         <song-item request='request'></song-item>

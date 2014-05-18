@@ -18,7 +18,7 @@ angular.module('starter', [
 ])
 
 .run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB) {
-  OpenFB.init('1417458451820697', 'http://localhost:8100/oauthcallback.html');
+  OpenFB.init('1417458451820697');//, 'http://localhost:8100/oauthcallback.html');
 
   $ionicPlatform.ready(function() {
     if(window.StatusBar) {
@@ -79,14 +79,16 @@ angular.module('starter', [
       }
     })
 
-    .state('app.browse', {
-      url: "/browse",
+    .state('app.newParty', {
+      url: "/parties/new",
       views: {
         'menuContent' :{
-          templateUrl: "templates/browse.html"
+          templateUrl: "templates/newParty.html",
+          controller: 'NewParty'
         }
       }
     })
+
     .state('app.parties', {
       url: "/parties",
       views: {

@@ -1,10 +1,4 @@
-var directives = angular.module('starter.directives', [
-    "com.2fdevs.videogular",
-    "com.2fdevs.videogular.plugins.controls",
-    "com.2fdevs.videogular.plugins.overlayplay",
-    "com.2fdevs.videogular.plugins.buffering",
-    "com.2fdevs.videogular.plugins.poster"
-  ]);
+var directives = angular.module('starter.directives', []);
 
 directives.directive('songItem', function(CurrentRequest) {
   return {
@@ -21,4 +15,19 @@ directives.directive('songItem', function(CurrentRequest) {
     replace: true
   }
 });
+
+directives.directive('noDrag', function($ionicGesture) { 
+  return {
+    link: function(scope, element, attr) {
+      $ionicGesture.on('dragleft', function(e) {
+        e.gesture.srcEvent.preventDefault();
+      }, element);
+
+      $ionicGesture.on('dragright', function(e) {
+        e.gesture.srcEvent.preventDefault();
+      }, element);
+    }
+  }
+});
+
 

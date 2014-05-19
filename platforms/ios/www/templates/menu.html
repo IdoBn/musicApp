@@ -8,12 +8,20 @@
 
   <ion-side-menu side="left">
     <header class="bar bar-header bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title">{{user.name}}</h1>
     </header>
     <ion-content class="has-header">
       <ion-list>
         <ion-item nav-clear menu-close href="#/app/parties">
           Parties
+        </ion-item>
+        <ion-item ng-show="user" item-type="item-icon-left" nav-clear menu-close ng-click="logout()">
+          <i class="icon ion-log-out"></i>
+          Logout
+        </ion-item>
+        <ion-item ng-show="user" item-type="item-icon-left" nav-clear menu-close ng-click="revokePermissions()">
+          <i class="icon ion-unlocked"></i>
+          Revoke Permissions
         </ion-item>
       </ion-list>
     </ion-content>

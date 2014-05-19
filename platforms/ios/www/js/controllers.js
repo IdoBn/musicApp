@@ -1,6 +1,35 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope) {
+.controller('AppCtrl', function($scope, $state, OpenFB, AuthUser, $rootScope) {
+  $scope.logout = function () {
+    OpenFB.logout();
+    $state.go('app.login');
+  };
+
+  $scope.revokePermissions = function () {
+    OpenFB.revokePermissions().then(
+    function () {
+      $state.go('app.login');
+    },
+    function () {
+      alert('Revoke permissions failed');
+    });
+  };
+
+  $rootScope.$on('CURRENT_USER_SET', function() {
+    $scope.user = AuthUser.getCurrentUser();
+    console.log($scope.user);
+  });
+
+  // $rootScope.$on('$stateChangeStart', 
+  //   function(event, toState, toParams, fromState, fromParams){ 
+  //       console.log('to state', toState);
+  //       console.log('auth user: ',AuthUser.getCurrentUser());
+  //       if (AuthUser.getCurrentUser() == null) {
+  //         console.log('unauthorized!');
+  //         event.preventDefault(); 
+  //       };
+  // });
 })
 
 .controller('PartiesCtrl', function($scope, Party) {
@@ -10,8 +39,21 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope) {
+.controller('LoginCtrl', function ($scope, $state, OpenFB) {
+  $scope.facebookLogin = function () {
+    OpenFB.login('email,read_stream').then(
+      function () {
+        $state.go('app.parties');
+      },
+      function () {
+        alert('OpenFB login failed');
+      });
+  };
+})
+
+.controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope, AuthUser) {
   $scope.id = $stateParams.partyId;
+  $scope.currentUser = AuthUser.getCurrentUser();
   Party.getParty($scope.id).success(function(data) {
     $scope.party = data.party;
   });
@@ -26,6 +68,14 @@ angular.module('starter.controllers', [])
   };
 
   $rootScope.$broadcast('destroyInterval');
+})
+
+.controller('NewParty', function($scope, Party, $state) {
+  $scope.createParty = function(party) {
+    Party.createParty(party).success(function(data) {
+      $state.go('app.parties');
+    });
+  };
 })
 
 .controller('PartySearchCtrl', function($scope, Party, $stateParams, $ionicViewService) {

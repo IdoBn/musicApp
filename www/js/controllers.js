@@ -20,6 +20,16 @@ angular.module('starter.controllers', [])
     $scope.user = AuthUser.getCurrentUser();
     console.log($scope.user);
   });
+
+  // $rootScope.$on('$stateChangeStart', 
+  //   function(event, toState, toParams, fromState, fromParams){ 
+  //       console.log('to state', toState);
+  //       console.log('auth user: ',AuthUser.getCurrentUser());
+  //       if (AuthUser.getCurrentUser() == null) {
+  //         console.log('unauthorized!');
+  //         event.preventDefault(); 
+  //       };
+  // });
 })
 
 .controller('PartiesCtrl', function($scope, Party) {
@@ -29,11 +39,11 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('LoginCtrl', function ($scope, $location, OpenFB) {
+.controller('LoginCtrl', function ($scope, $state, OpenFB) {
   $scope.facebookLogin = function () {
     OpenFB.login('email,read_stream').then(
       function () {
-        $location.path('/app/person/me/feed');
+        $state.go('app.parties');
       },
       function () {
         alert('OpenFB login failed');

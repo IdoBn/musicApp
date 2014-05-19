@@ -91,6 +91,7 @@ services.factory('AuthUser', function($http, $rootScope) {
   var currentUser = null;
   return {
     login: function(params) {
+      var self = this;
       return $http({
         url: URL + '/sessions',
         method: 'POST',
@@ -98,13 +99,16 @@ services.factory('AuthUser', function($http, $rootScope) {
           access_token: params.access_token,
           expires_in: params.expires_in
         }
+      }).success(function(data) {
+        self.setCurrentUser(data);
       });
     },
     logout: function() {
-      return $http({
-        url: URL + '/sessions',
-        method: 'DELETE',
-      });
+      this.setCurrentUser(null);
+      // return $http({
+      //   url: URL + '/sessions',
+      //   method: 'DELETE',
+      // });
     },
     setCurrentUser: function(user) {
       currentUser = user;

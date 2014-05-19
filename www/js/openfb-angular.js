@@ -72,17 +72,17 @@ angular.module('openfb', [
             logout();
 
             // Check if an explicit oauthRedirectURL has been provided in init(). If not, infer the appropriate value
+            if (runningInCordova) {
+                oauthRedirectURL = 'https://www.facebook.com/connect/login_success.html';
+            };
+
             if (!oauthRedirectURL) {
-                if (runningInCordova) {
-                    oauthRedirectURL = 'https://www.facebook.com/connect/login_success.html';
+                // Trying to calculate oauthRedirectURL based on the current URL.
+                var index = document.location.href.indexOf('index.html');
+                if (index > 0) {
+                    oauthRedirectURL = document.location.href.substring(0, index) + 'oauthcallback.html';
                 } else {
-                    // Trying to calculate oauthRedirectURL based on the current URL.
-                    var index = document.location.href.indexOf('index.html');
-                    if (index > 0) {
-                        oauthRedirectURL = document.location.href.substring(0, index) + 'oauthcallback.html';
-                    } else {
-                        return alert("Can't reliably infer the OAuth redirect URI. Please specify it explicitly in openFB.init()");
-                    }
+                    return alert("Can't reliably infer the OAuth redirect URI. Please specify it explicitly in openFB.init()");
                 }
             }
             
@@ -127,10 +127,7 @@ angular.module('openfb', [
                 queryString = url.substr(url.indexOf('#') + 1);
                 obj = parseQueryString(queryString);
                 // window.localStorage.setItem("access_token", obj['access_token']);
-                console.log(obj);
-                AuthUser.login(obj).success(function(data) {
-                    AuthUser.setCurrentUser(data);
-                });
+                AuthUser.login(obj);
                 tokenStore['fbtoken'] = obj['access_token'];
                 deferredLogin.resolve();
             } else if (url.indexOf("error=") > 0) {

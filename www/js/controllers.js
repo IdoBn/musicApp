@@ -51,7 +51,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope, AuthUser) {
+.controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope, AuthUser, $state) {
   $scope.id = $stateParams.partyId;
   $scope.currentUser = AuthUser.getCurrentUser();
   Party.getParty($scope.id).success(function(data) {
@@ -65,6 +65,14 @@ angular.module('starter.controllers', [])
     .finally(function() {
       $scope.$broadcast('scroll.refreshComplete');
    });
+  };
+
+  $scope.destroyParty = function() {
+    if (confirm('are you sure?')) {
+      Party.destroyParty($scope.party.id).success(function() {
+        $state.go('app.parties');
+      });
+    };
   };
 
   $rootScope.$broadcast('destroyInterval');

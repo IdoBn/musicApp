@@ -1,0 +1,19 @@
+{
+  "name": "videogular-controls",
+  "version": "0.3.2",
+  "main": "./controls.js",
+  "dependencies": {
+    "videogular": "latest"
+  },
+  "homepage": "https://github.com/2fdevs/bower-videogular-controls",
+  "_release": "0.3.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.3.2",
+    "commit": "86c539740fab6229140dcf80c5f067eb9a813cd5"
+  },
+  "_source": "git://github.com/2fdevs/bower-videogular-controls.git",
+  "_target": "~0.3.2",
+  "_originalSource": "videogular-controls",
+  "_direct": true
+}

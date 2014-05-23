@@ -51,7 +51,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope, AuthUser, $state) {
+.controller('PartyCtrl', function($scope, $stateParams, Party, $rootScope, AuthUser, $state, $ionicPopup) {
   $scope.id = $stateParams.partyId;
   $scope.currentUser = AuthUser.getCurrentUser();
   Party.getParty($scope.id).success(function(data) {
@@ -68,11 +68,17 @@ angular.module('starter.controllers', [])
   };
 
   $scope.destroyParty = function() {
-    if (confirm('are you sure?')) {
-      Party.destroyParty($scope.party.id).success(function() {
-        $state.go('app.parties');
-      });
-    };
+
+    $ionicPopup.confirm({
+      title: 'Delete Group',
+      content: 'Are you sure you want to delete this group?'
+    }).then(function(res) {
+      if(res) {
+        Party.destroyParty($scope.party.id).success(function() {
+          $state.go('app.parties');
+        });
+      }
+    });
   };
 
   $rootScope.$broadcast('destroyInterval');

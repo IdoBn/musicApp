@@ -109,22 +109,37 @@ angular.module('starter.controllers', [])
 
 .controller('RequestCtrl', function($scope, CurrentRequest, DirectVideoUrl, $sce) {
   $scope.request = CurrentRequest.get();
+
   DirectVideoUrl.getDirectUrl($scope.request.url).success(function(data) {
     console.log(data);
     $scope.request.directUrl = $sce.trustAsResourceUrl(data.direct_url);
     $scope.setVideo();
   });
+
   $scope.setVideo = function() {
     var sourceElement = angular.element(document.querySelector('videogular video'));
     sourceElement[0].src = $scope.request.directUrl;
     sourceElement[0].type = 'video/mp4';
   };
+
   $scope.onPlayerReady = function(API) {
     $scope.API = API;
     API.play();
   };
+
   $scope.onCompleteVideo = function() {
     console.log('done');
+  };
+
+  $scope.config = {
+    width: 740,
+    height: 380,
+    autoHide: false,
+    autoHideTime: 3000,
+    autoPlay: false,
+    responsive: false,
+    transclude: true,
+    theme: 'lib/bower_components/videogular-themes-default/videogular.css'
   };
 })
 

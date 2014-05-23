@@ -1,4 +1,4 @@
-<ion-view title="{{party.name}} player">
+<ion-view title="{{party.name}} player" hide-back-button="true">
   <ion-content class="has-header">
     <div>
       <videogular vg-player-ready="onPlayerReady" vg-complete="onCompleteVideo" vg-theme="config.theme" vg-responsive="true">
@@ -19,7 +19,9 @@
           <vg-fullscreenButton vg-enter-full-screen-icon="request.thumbnail" vg-exit-full-screen-icon="request.thumbnail"></vg-fullscreenButton>
         </vg-controls>
       </videogular>
-      <h1>my id {{partyId}}</h1>
+      <div class="button-bar">
+        <a href="#/app/parties/{{partyId}}" class='button'>back</a>
+      </div>
     </div>
   </ion-content>
 </ion-view>

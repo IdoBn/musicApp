@@ -1,8 +1,27 @@
-<ion-view title="{{request.title}}">
+<ion-view title="{{request.title}}" hide-back-button="true">
   <ion-content class="has-header">
-    <videogular vg-player-ready="onPlayerReady" vg-width="320" vg-height="200">
-      <video preload='metadata' poster="{{request.thumbnail}}"></video>
-    </videogular>
-    <h4>{{request.author}}</h4>
+    <div>
+      <videogular vg-player-ready="onPlayerReady" vg-complete="onCompleteVideo" vg-theme="config.theme" vg-responsive="true">
+        <vg-buffering></vg-buffering>
+        <vg-overlay-play vg-play-icon="config.theme.playIcon"></vg-overlay-play>
+        <video preload='metadata' poster="{{request.thumbnail}}"></video>
+        <vg-controls vg-autohide="config.autoHide" vg-autohide-time="config.autoHideTime" style="height: 50px;">
+          <vg-play-pause-button></vg-play-pause-button>
+          <vg-timeDisplay>{{ currentTime }}</vg-timeDisplay>
+          <vg-scrubBar>
+            <vg-scrubbarcurrenttime></vg-scrubbarcurrenttime>
+          </vg-scrubBar>
+          <vg-timeDisplay>{{ totalTime }}</vg-timeDisplay>
+          <vg-volume>
+            <vg-mutebutton></vg-mutebutton>
+            <vg-volumebar></vg-volumebar>
+          </vg-volume>
+          <vg-fullscreenButton vg-enter-full-screen-icon="request.thumbnail" vg-exit-full-screen-icon="request.thumbnail"></vg-fullscreenButton>
+        </vg-controls>
+      </videogular>
+      <div class="button-bar">
+        <a href="#/app/parties/{{request.party_id}}" class='button'>back</a>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

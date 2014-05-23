@@ -11,10 +11,8 @@
       <a href="#/app/parties/{{id}}/player" class='button'>player</a>
       <a ng-click="destroyParty()" class="button">destroy</a>
     </div>
-    <ion-list>
-      <ion-item ng-repeat="request in party.requests">
-        <song-item request='request'></song-item>
-      </ion-item>
+    <ion-list class="list">
+      <song-item request='request' ng-repeat="request in party.requests"></song-item>
     </ion-list>
   </ion-content>
 </ion-view>

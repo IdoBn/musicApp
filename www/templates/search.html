@@ -9,13 +9,11 @@
       </button>
     </div>
     <ion-list>
-      <ion-item ng-repeat="video in searchResults.videos">
-        <a class="item item-thumbnail-left" ng-click="createRequest(video)">
-          <img ng-src="{{video.thumbnails[0].url}}">
-          <h2>{{video.title}}</h2>
-          <p>{{video.author.name}}</p>
-        </a>
-      </ion-item>
+      <a ng-repeat="video in searchResults.videos" class="item item-thumbnail-left" ng-click="createRequest(video)">
+        <img ng-src="{{video.thumbnails[0].url}}">
+        <h2>{{video.title}}</h2>
+        <p>{{video.author.name}}</p>
+      </a>
     </ion-list>
   </ion-content>
 </ion-view>

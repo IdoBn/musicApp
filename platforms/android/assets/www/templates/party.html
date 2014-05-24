@@ -1,0 +1,18 @@
+<ion-view title="{{party.name}}">
+  <ion-nav-buttons side="right">
+    <a href="#/app/parties/{{id}}/search" class='button'>search</a>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    <div ng-show="currentUser.id == party.user.id" class="button-bar">
+      <a href="#/app/parties/{{id}}/player" class='button'>player</a>
+      <a ng-click="destroyParty()" class="button">destroy</a>
+    </div>
+    <ion-list class="list">
+      <song-item request='request' ng-repeat="request in party.requests"></song-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

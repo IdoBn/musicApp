@@ -1,0 +1,19 @@
+<ion-view title="Search">
+  <ion-content class="has-header">
+    <div class="item item-input-inset">
+      <label class="item-input-wrapper">
+        <input type="text" placeholder="Search" ng-model='query'>
+      </label>
+      <button class="button button-small" ng-click='doSearch(query)'>
+        Search
+      </button>
+    </div>
+    <ion-list>
+      <a ng-repeat="video in searchResults.videos" class="item item-thumbnail-left" ng-click="createRequest(video)">
+        <img ng-src="{{video.thumbnails[0].url}}">
+        <h2>{{video.title}}</h2>
+        <p>{{video.author.name}}</p>
+      </a>
+    </ion-list>
+  </ion-content>
+</ion-view>

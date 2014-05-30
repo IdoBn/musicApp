@@ -87,7 +87,10 @@
 
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
-
+    
+    //stop app from going to sleep
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+    
     return YES;
 }
 

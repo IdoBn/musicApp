@@ -4,7 +4,12 @@
       <videogular vg-player-ready="onPlayerReady" vg-complete="onCompleteVideo" vg-theme="config.theme" vg-responsive="true">
         <vg-buffering></vg-buffering>
         <vg-overlay-play vg-play-icon="config.theme.playIcon"></vg-overlay-play>
-        <video preload='metadata' poster="{{request.thumbnail}}"></video>
+        <video 
+          preload='metadata'
+          poster="{{request.thumbnail}}"
+          controls
+          webkit-playsinline="true">
+        </video>
         <vg-controls vg-autohide="config.autoHide" vg-autohide-time="config.autoHideTime" style="height: 50px;">
           <vg-play-pause-button></vg-play-pause-button>
           <vg-timeDisplay>{{ currentTime }}</vg-timeDisplay>

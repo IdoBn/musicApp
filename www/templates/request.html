@@ -34,28 +34,19 @@
           <div class="item item-avatar">
             <img ng-src="{{request.user.thumbnail}}">
             <h2>by: {{request.user.name}}</h2>
-            <p>{{request.created_at | date:'HH:mm yyyy-MM-dd '}}</p>
+            <p>{{request.created_at | timeago }}</p>
           </div>
         </div>
       </div>
       <hr>
       <div class="row"><h4 class=''>Likes</h4></div>
-      <div class="row ">
-        <div class="col col-50" ng-show='$index % 2 != 0' ng-repeat="like in request.likes">
+      <div class="row" ng-repeat="like in request.likes">
+        <div class="col col-75">
           <div class="item item-avatar">
             <img ng-src="{{like.user.thumbnail}}">
             <h2>{{like.user.name}}</h2>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col col-50" ng-show='$index % 2 == 0' ng-repeat="like in request.likes">
-          <div class="item item-avatar">
-            <img ng-src="{{like.user.thumbnail}}">
-            <h2>{{like.user.name}}</h2>
-          </div>
-        </div>
-      </div>
-    </div>
   </ion-content>
 </ion-view>

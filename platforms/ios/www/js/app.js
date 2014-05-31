@@ -14,7 +14,8 @@ angular.module('starter', [
   "com.2fdevs.videogular.plugins.controls",
   "com.2fdevs.videogular.plugins.overlayplay",
   "com.2fdevs.videogular.plugins.buffering",
-  "com.2fdevs.videogular.plugins.poster"
+  "com.2fdevs.videogular.plugins.poster",
+  'starter.filters'
 ])
 
 .run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB) {

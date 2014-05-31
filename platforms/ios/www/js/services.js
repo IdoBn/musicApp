@@ -84,6 +84,13 @@ services.factory('Party', function($http, AuthUser) {
           user_access_token: AuthUser.getCurrentUser().access_token
         }
       });
+    },
+    destroyRequest: function(id) {
+      return $http.delete(URL + '/requests/' + id, {
+        params: {
+          user_access_token: AuthUser.getCurrentUser().access_token 
+        }
+      });
     }
   }
 });

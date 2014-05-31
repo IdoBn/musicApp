@@ -106,12 +106,31 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('RequestCtrl', function($scope, CurrentRequest, DirectVideoUrl, $sce, Party, $rootScope) {
+.controller('RequestCtrl', function($scope, $ionicPopup, CurrentRequest, DirectVideoUrl, $sce, Party, $rootScope, $ionicViewService, AuthUser) {
   $scope.request = CurrentRequest.get();
+  $scope.currentUser = AuthUser.getCurrentUser();
+
+  Party.getParty($scope.request.party_id).success(function(data) {
+    $scope.party = data.party;
+  })
 
   $rootScope.$on('request-updated', function() {
     $scope.request = CurrentRequest.get();
   })
+
+  $scope.deleteRequest = function(id) {
+    $ionicPopup.confirm({
+      title: 'Delete Request',
+      content: 'Are you sure you want to delete this request?'
+    }).then(function(res) {
+      if(res) {
+        Party.destroyRequest(id).success(function(data) {
+          var backView = $ionicViewService.getBackView();
+          backView && backView.go();
+        });
+      }
+    }); 
+  };
 
   DirectVideoUrl.getDirectUrl($scope.request.url).success(function(data) {
     console.log(data);

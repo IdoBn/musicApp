@@ -27,7 +27,11 @@
       <div class="button-bar">
         <a href="#/app/parties/{{request.party_id}}" class='button'>back</a>
         <like-button class='button'></like-button>
-        <!-- <button class='button' onclick='unlike(request.id)'>unlike</button> -->
+        <button 
+          class='button' 
+          ng-if="request.user.id == currentUser.id || party.user.id == currentUser.id" 
+          ng-click='deleteRequest(request.id)'>
+          delete</button>
       </div>
       <div class='row'>
         <div class='col col-100'>
@@ -39,7 +43,7 @@
         </div>
       </div>
       <hr>
-      <div class="row"><h4 class=''>Likes</h4></div>
+      <div class="row" ng-if="request.likes"><h4 class=''>Likes</h4></div>
       <div class="row" ng-repeat="like in request.likes">
         <div class="col col-75">
           <div class="item item-avatar">

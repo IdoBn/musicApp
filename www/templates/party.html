@@ -11,8 +11,14 @@
       <a href="#/app/parties/{{id}}/player" class='button'>player</a>
       <a ng-click="destroyParty()" class="button">destroy</a>
     </div>
-    <ion-list class="list">
-      <song-item request='request' ng-repeat="request in party.requests"></song-item>
+    <ion-list 
+      class="list"
+      can-swipe="true">
+      <song-item request='request' ng-repeat="request in party.requests">
+        <ion-delete-button class="ion-minus-circled"
+                       ng-click="items.splice($index, 1)">
+        </ion-delete-button>
+      </song-item>
     </ion-list>
   </ion-content>
 </ion-view>

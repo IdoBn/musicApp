@@ -20,7 +20,7 @@ angular.module('starter', [
 
 .run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB) {
   OpenFB.init('1417458451820697', 'http://ec2-54-85-146-44.compute-1.amazonaws.com/juke/oauthcallback.html');
-  //
+  //''
 
   $ionicPlatform.ready(function() {
     if(window.StatusBar) {

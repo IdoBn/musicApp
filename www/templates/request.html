@@ -26,7 +26,14 @@
       </videogular>
       <div class="button-bar">
         <a href="#/app/parties/{{request.party_id}}" class='button'>back</a>
+        <like-button class='button'></like-button>
+        <!-- <button class='button' onclick='unlike(request.id)'>unlike</button> -->
       </div>
+      <ul>
+        <li ng-repeat='like in request.likes'>
+          user: {{like.user.name}}
+        </li>
+      </ul>
     </div>
   </ion-content>
 </ion-view>

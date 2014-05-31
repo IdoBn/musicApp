@@ -1,8 +1,8 @@
 var services = angular.module('starter.services', []);
 
 // var URL = 'http://music-hasalon.herokuapp.com';
-var URL = 'http://music-hasalon-api.herokuapp.com';
-// var URL = 'http://localhost:3000'
+// var URL = 'http://music-hasalon-api.herokuapp.com';
+var URL = 'http://localhost:3000'
 // var URL = 'http://192.168.10.181:3000';
 
 services.factory('Party', function($http, AuthUser) {
@@ -66,6 +66,22 @@ services.factory('Party', function($http, AuthUser) {
       return $http.delete(URL + '/parties/' + id, {
         params: {
           user_access_token: AuthUser.getCurrentUser().access_token 
+        }
+      });
+    },
+    likeRequest: function(id) {
+      return $http({
+        url: URL + '/requests/' + id + '/like',
+        method: 'POST',
+        data: {
+          user_access_token: AuthUser.getCurrentUser().access_token
+        }
+      });
+    },
+    unlikeRequest: function(id) {
+      return $http.delete(URL + '/requests/' + id + '/unlike', {
+        params: {
+          user_access_token: AuthUser.getCurrentUser().access_token
         }
       });
     }

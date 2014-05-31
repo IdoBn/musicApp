@@ -68,7 +68,6 @@ angular.module('starter.controllers', [])
   };
 
   $scope.destroyParty = function() {
-
     $ionicPopup.confirm({
       title: 'Delete Group',
       content: 'Are you sure you want to delete this group?'
@@ -107,14 +106,30 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('RequestCtrl', function($scope, CurrentRequest, DirectVideoUrl, $sce) {
+.controller('RequestCtrl', function($scope, CurrentRequest, DirectVideoUrl, $sce, Party, $rootScope) {
   $scope.request = CurrentRequest.get();
+
+  $rootScope.$on('request-updated', function() {
+    $scope.request = CurrentRequest.get();
+  })
 
   DirectVideoUrl.getDirectUrl($scope.request.url).success(function(data) {
     console.log(data);
     $scope.request.directUrl = $sce.trustAsResourceUrl(data.direct_url);
     $scope.setVideo();
   });
+
+  $scope.like = function(id) {
+    Party.likeRequest(id).success(function(data) {
+      console.log('like request', data);
+    });
+  };
+
+  $scope.unlike = function(id, likeId) {
+    Party.unlikeRequest(id, likeId).success(function(data) {
+      console.log('unlike request', data);
+    });
+  };
 
   $scope.setVideo = function() {
     var sourceElement = angular.element(document.querySelector('videogular video'));
@@ -124,7 +139,7 @@ angular.module('starter.controllers', [])
 
   $scope.onPlayerReady = function(API) {
     $scope.API = API;
-    API.play();
+    // API.play();
   };
 
   $scope.onCompleteVideo = function() {

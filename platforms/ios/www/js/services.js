@@ -68,6 +68,22 @@ services.factory('Party', function($http, AuthUser) {
           user_access_token: AuthUser.getCurrentUser().access_token 
         }
       });
+    },
+    likeRequest: function(id) {
+      return $http({
+        url: URL + '/requests/' + id + '/like',
+        method: 'POST',
+        data: {
+          user_access_token: AuthUser.getCurrentUser().access_token
+        }
+      });
+    },
+    unlikeRequest: function(id) {
+      return $http.delete(URL + '/requests/' + id + '/unlike', {
+        params: {
+          user_access_token: AuthUser.getCurrentUser().access_token
+        }
+      });
     }
   }
 });

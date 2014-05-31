@@ -26,6 +26,27 @@
       </videogular>
       <div class="button-bar">
         <a href="#/app/parties/{{request.party_id}}" class='button'>back</a>
+        <like-button class='button'></like-button>
+        <!-- <button class='button' onclick='unlike(request.id)'>unlike</button> -->
+      </div>
+      <div class='row'>
+        <div class='col col-100'>
+          <div class="item item-avatar">
+            <img ng-src="{{request.user.thumbnail}}">
+            <h2>by: {{request.user.name}}</h2>
+            <p>{{request.created_at | date:'HH:mm yyyy-MM-dd '}}</p>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row"><h4 class='col'>Likes</h4></div>
+      <div class="">
+        <div class="row col col-50" ng-repeat="like in request.likes">
+          <div class="item item-avatar">
+            <img ng-src="{{like.user.thumbnail}}">
+            <h2>{{like.user.name}}</h2>
+          </div>
+        </div>
       </div>
     </div>
   </ion-content>
